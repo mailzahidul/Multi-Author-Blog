@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-lightwhite position-relative">
+        <div class="h-100 tofront">
+            <div class="row justify-content-between">
+                <div class="col-md-6 pt-5 px-5 pb-5 align-self-center">
+                    <h1 class="mb-3 fw-bold">Home page</h1>
+                    <p class="small text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur officia cupiditate esse aspernatur incidunt nostrum facere magni eos. Voluptates esse nisi beatae temporibus omnis porro minima ipsam autem doloribus aperiam!</p>
+                </div>
+                <div class="col-md-6 d-none d-md-block pr-0">
+                    <img class="float-end w-100" src="{% static 'images/color.jpg' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row py-5">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-top">
+                    <img class="float-end w-100" src="{% static 'images/color.jpg' %}" alt="">
+                </div>
+                <div class="card-body">
+                    <h2>skladjfk</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odio non dignissimos magni numquam esse illum vero ex ipsa ad iure quos molestiae accusantium quod voluptatibus, dolorum maiores quasi adipisci temporibus?</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 p-3">
+            <h1>second</h1>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
