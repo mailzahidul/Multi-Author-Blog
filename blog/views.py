@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Category
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.contrib.auth.models import User
 # Create your views here.
 
@@ -26,11 +27,33 @@ class Registration_views(View):
         username = request.POST.get('username')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
-        User.objects.create_user(first_name=fname, last_name=lname, email=email, username=username, password=password1)
+        if password1 == password2:
+            user_check = authenticate(username=username, password=password1)
+            if user_check is None:
+                try:                    
+                    User.objects.create_user(first_name=fname, last_name=lname, email=email, username=username, password=password1)
+                    messages.success(request, "Sign Up Successfully.")
+                except Exception as errors:
+                    messages.error(request, "Username Already Exist.")
+            else:
+                messages.error(request, "Username Already Exist.")
+        else:
+            messages.error(request, "Password not match.")
         return render(request, 'user/registration.html')
 
+
 def userlogin(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user_obj = authenticate(username=username, password=password)
+        if user_obj is not None:
+            login(request, user_obj)
+            return redirect('home')
+        else:
+            messages.error(request, "Username or Password Invalid.")
     return render(request, 'user/login.html')
+
 
 
 def userlogout(request):
