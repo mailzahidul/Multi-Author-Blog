@@ -8,13 +8,7 @@ from django.contrib.auth.models import User
 
 
 def home(request):
-    three_category = Category.objects.order_by('id')[:3]
-    rest_category = Category.objects.order_by('id')[3:]
-    context = {
-        'three_category': three_category,
-        'rest_category': rest_category,
-    }
-    return render(request, 'pages/home.html', context)
+    return render(request, 'pages/home.html')
 
 class Registration_views(View):
     def get(self, request):
@@ -55,11 +49,13 @@ def userlogin(request):
     return render(request, 'user/login.html')
 
 
-
 def userlogout(request):
     logout(request)
     return redirect('home')
 
+
+def contact_us(request):
+    return render(request, 'pages/contact_us.html')
 
 # def category_view(request):
 #     # categories = Category.objects.all()
