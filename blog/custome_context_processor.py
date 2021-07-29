@@ -6,17 +6,14 @@ from django.db.models import Count
 
 
 def menucategory(request):
-    # categories = Category.objects.all()\
-    #     .annotate(num_post=Count('post'))\
-    #     .order_by('-num_post')
-
     category_3 = Category.objects.all()\
         .annotate(num_post=Count('post'))\
         .order_by('-num_post')[:3]
-        
+
     rest_category = Category.objects.all()\
         .annotate(num_post=Count('post'))\
         .order_by('-num_post')[3:]
+        
     context = {
         'category_3' : category_3,
         'rest_category': rest_category,
@@ -24,4 +21,5 @@ def menucategory(request):
     }
     return context
 
-
+# .annotate(num_post=Count('post'))\     -> countin the post under each category
+# .order_by('-num_post')[:3]             -> ordering by most post (category with max posts will show first).

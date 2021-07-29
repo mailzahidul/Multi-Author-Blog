@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from .models import Category
 from django.views import View
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth.models import User
+from .forms import Password_Change_Form
 # Create your views here.
 
 
@@ -34,6 +36,48 @@ class Registration_views(View):
         else:
             messages.error(request, "Password not match.")
         return render(request, 'user/registration.html')
+
+
+def change_password(request):
+    if request.method == 'POST':
+        forms = Password_Change_Form(request.user, request.POST)
+        if forms.is_valid():
+            forms.save()
+            update_session_auth_hash(request, request.user)
+            messages.success(request, "Your password is successfully updated")
+            return redirect('change_password')
+    else:
+        forms = Password_Change_Form(request.user)
+    context = {
+        'forms':forms
+    }
+    return render(request, 'user/changepassword.html', context)
+
+
+
+
+
+
+
+
+# def change_password(request):
+#     if request.method == 'POST':
+#         forms = UserPasswordChangeForm(request.user, request.POST)
+#         if forms.is_valid():
+#             forms.save()
+#             update_session_auth_hash(request, request.user)  # Important!
+#             messages.success(request, 'Your password was successfully updated!')
+#             return redirect('changepassword')
+#         else:
+#             messages.error(request, "Please correct the error below.")
+#     else:
+#         forms = Password_Change_Form(request.user)
+#         # forms = PasswordChangeForm(request.user)
+#         print(forms, "Forms")
+#     context = {
+#         'forms': forms
+#     }
+#     return render(request, 'user/changepassword.html', context)
 
 
 def userlogin(request):
