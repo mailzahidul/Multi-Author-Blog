@@ -44,8 +44,7 @@ def change_password(request):
         if forms.is_valid():
             forms.save()
             update_session_auth_hash(request, request.user)
-            messages.success(request, "Your password is successfully updated")
-            return redirect('change_password')
+            return redirect('change_password_done')
     else:
         forms = Password_Change_Form(request.user)
     context = {
@@ -54,30 +53,8 @@ def change_password(request):
     return render(request, 'user/changepassword.html', context)
 
 
-
-
-
-
-
-
-# def change_password(request):
-#     if request.method == 'POST':
-#         forms = UserPasswordChangeForm(request.user, request.POST)
-#         if forms.is_valid():
-#             forms.save()
-#             update_session_auth_hash(request, request.user)  # Important!
-#             messages.success(request, 'Your password was successfully updated!')
-#             return redirect('changepassword')
-#         else:
-#             messages.error(request, "Please correct the error below.")
-#     else:
-#         forms = Password_Change_Form(request.user)
-#         # forms = PasswordChangeForm(request.user)
-#         print(forms, "Forms")
-#     context = {
-#         'forms': forms
-#     }
-#     return render(request, 'user/changepassword.html', context)
+def change_password_done(request):
+    return render(request, 'user/change_password_done.html')
 
 
 def userlogin(request):
@@ -100,11 +77,3 @@ def userlogout(request):
 
 def contact_us(request):
     return render(request, 'pages/contact_us.html')
-
-# def category_view(request):
-#     # categories = Category.objects.all()
-#     # print(categories)
-#     context = {
-#         'categories': categories
-#     }
-#     return render(request, 'components/header.html', context)

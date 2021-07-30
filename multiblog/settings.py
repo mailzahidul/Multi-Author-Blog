@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 from django.contrib import messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -140,12 +141,14 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
+
+        # Before send mail Check your Gmail "Less secure app access: ON"
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = '<babazahidul@gmail.com>'
-EMAIL_HOST_PASSWORD = '<Z009656z>'
+EMAIL_HOST = 'smtp.gmail.com'                                           # can also use yahoo
 EMAIL_USE_TLS = True
+EMAIL_PORT = 587                                                         # This is Gmail Port(This will help send mail from a gmail account)
+EMAIL_HOST_USER = 'babazahidul@gmail.com'
+EMAIL_HOST_PASSWORD = 'Z009656z'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
