@@ -42,3 +42,18 @@ class Post(models.Model):
         return self.title
 
 
+
+class EmailSend(models.Model):
+    sender_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    sender = models.EmailField(blank=True)
+    subject = models.CharField(max_length=100)
+    message = models.TextField()
+    send_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Email Send'
+
+    def __str__(self):
+        return self.sender
+
+

@@ -3,10 +3,67 @@
 
 {% block title %} Contact Page {% endblock %}
 
-{% block content %} 
+{% block content %}
 <div class="container">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <!-- <div class="alert" {% if message.tags %} class="{{ message.tags }}" {%endif %} role="alert">{{ message }} -->
+        <div class="alert{% if message.tags %} {{ message.tags }} {% endif %}" role="alert">{{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        {% endfor %}
+    </div>
+    {% endif %}
     <h1>This is Contact us page</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto assumenda adipisci eius saepe consequuntur rem, facilis praesentium! Asperiores quasi necessitatibus ea deleniti sed dolor sint, dignissimos quas mollitia, fugit quod.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto assumenda adipisci eius saepe consequuntur
+        rem, facilis praesentium! Asperiores quasi necessitatibus ea deleniti sed dolor sint, dignissimos quas mollitia,
+        fugit quod.</p>
+
+    <!-- <form action="" method="POST">
+        {% csrf_token %}
+        {{ forms }}
+        <input type="submit" value="Send">
+    </form> -->
+
+
+    <!-- <form action="" method="POST">
+        {% csrf_token %}
+         {% for form in forms %}
+        <div class="mb-3">
+            {{ form }}
+        </div>
+        {% endfor %}
+    </form> -->
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% if request.user.is_authenticated %}
+            <div class="mb-3">
+                <input type="text" name="subject" class="form-control" maxlength="100" required="" id="id_subject">
+            </div>
+            <div class="mb-3">
+                <textarea name="message" cols="40" rows="10" class="form-control" required="" id="id_message"></textarea>
+            </div>
+            {% else %}
+            <div class="mb-3">
+                <input type="email" name="sender" class="form-control" placeholder="Email" maxlength="254" required="" id="id_sender">
+            </div>
+            <div class="mb-3">
+                <input type="text" name="subject" class="form-control" maxlength="100" required="" id="id_subject">
+            </div>
+            <div class="mb-3">
+                <textarea name="message" cols="40" rows="10" class="form-control" required="" id="id_message"></textarea>
+            </div>
+            {% endif %}
+            
+            
+            <input type="submit" value="Send">
+    </form>
+
 </div>
 
 {% endblock %}

@@ -62,7 +62,7 @@
 
                             <form class="user" method="POST">
                                 {% csrf_token %}
-                                <div class="form-group row">
+                                <div class="mb-3 row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="text" class="form-control form-control-user" id="exampleFirstName"
                                             placeholder="First Name" name='fname' required>
@@ -72,15 +72,15 @@
                                             placeholder="Last Name" name="lname">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <input type="text" class="form-control form-control-user" id="exampleInputEmail"
                                         placeholder="Type Username" name="username" required>
                                 </div>
-                                <div class="form-group">
+                                <div class="mb-3">
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail"
                                         placeholder="Email Address" name="email" required>
                                 </div>
-                                <div class="form-group row">
+                                <div class="mb-3 row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                         <input type="password" class="form-control form-control-user"
                                             id="exampleInputPassword" placeholder="Password" name="password1" required>
@@ -91,9 +91,10 @@
                                             required>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block"> Sign Up</button>
-
+                                <button type="submit" class="btn btn-primary w-100"> Sign Up</button>
                             </form>
+                            <br>                    
+                            <br>                    
                             <hr>
                             <div class="text-center">
                                 <a class="small" href="{% url 'reset_password' %}">Forgot Password?</a>

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
+from .models import EmailSend
 
 
 # class RegistrationForm(UserCreationForm):
@@ -20,3 +21,14 @@ class Password_Change_Form(PasswordChangeForm):
     old_password = forms.CharField( label='Current Password' , widget=forms.PasswordInput(attrs={'class':'form-control'}))
     new_password1 = forms.CharField(label='New Password', widget=forms.PasswordInput(attrs={'class':'form-control'}))
     new_password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={'class':'form-control'}))
+
+
+class EmailSendForm(forms.ModelForm):
+    class Meta:
+        model = EmailSend
+        exclude = ['sender_user', 'send_date']
+        widgets = {
+            'sender' : forms.EmailInput(attrs={'class':'form-control', 'placeholder':'Email'}),
+            'subject' : forms.TextInput(attrs={'class':'form-control'}),
+            'message' : forms.Textarea(attrs={'class':'form-control'}),
+        }

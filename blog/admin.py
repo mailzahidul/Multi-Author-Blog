@@ -13,3 +13,9 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(Post, PostAdmin)
 
 admin.site.register(Tag)
+
+
+class EmailSendAdmin(admin.ModelAdmin):
+    list_display = ['sender_user', 'sender', 'subject', 'send_date']
+
+admin.site.register(EmailSend, EmailSendAdmin)

@@ -48,6 +48,7 @@
                     data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-bars"></i></a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% if request.user.is_authenticated %}
+                    <li><a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a></li>
                     <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                     {% else %}
                     <li><a class="dropdown-item" href="{% url 'registration' %}">Sign Up</a></li>

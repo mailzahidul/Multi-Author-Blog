@@ -5,7 +5,8 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import Password_Change_Form
+from .forms import Password_Change_Form, EmailSendForm
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -76,4 +77,27 @@ def userlogout(request):
 
 
 def contact_us(request):
-    return render(request, 'pages/contact_us.html')
+    forms = EmailSendForm()
+    if request.method == 'POST':
+        forms = EmailSendForm(request.POST)
+        if forms.is_valid():
+            subject = forms.cleaned_data['subject']
+            sender = forms.cleaned_data['sender']
+            message = forms.cleaned_data['message']
+            recipients = ['mailzahidul@gmail.com']
+            send_mail(subject, message, sender, recipients)
+            if request.user.is_authenticated:
+                user = request.user
+                obj = forms.save(commit=True)
+                obj.sender_user=user
+                obj.sender=user.email
+                obj.save()
+                return redirect('contact_us')
+            forms.save()
+            return redirect('contact_us')
+        else:
+            messages.error(request, forms.errors)
+    context={
+        'forms':forms
+    }
+    return render(request, 'pages/contact_us.html', context)
