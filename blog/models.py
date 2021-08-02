@@ -22,6 +22,10 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+STATUS = (
+    ('active', 'Activae'),
+    ('deactive', 'Deactivae')
+)
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
@@ -30,7 +34,8 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    featured = models.BooleanField(default=True)
+    status = models.CharField(choices=STATUS, max_length=10, default='active')
+    featured = models.BooleanField(default=False)
     visit_count = models.IntegerField(default=0)
     visible = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True)

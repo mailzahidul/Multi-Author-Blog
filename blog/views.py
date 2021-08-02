@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Category
+from .models import Category, Post
 from django.views import View
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -11,7 +11,13 @@ from django.core.mail import send_mail
 
 
 def home(request):
-    return render(request, 'pages/home.html')
+    feature_post = Post.objects.filter(status='active', featured=True, visible=True).order_by('category', '-created_date')[:5]
+    context={
+        'f_post': feature_post[0],
+        's_post': feature_post[1],
+        'last_post': feature_post[2:]
+    }
+    return render(request, 'pages/home.html', context)
 
 class Registration_views(View):
     def get(self, request):

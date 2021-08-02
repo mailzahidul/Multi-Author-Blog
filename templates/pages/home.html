@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %} MultiBlogs {% endblock %}
 {% block content %}
 
@@ -9,7 +9,7 @@
 		<div class="pl-4 pr-0 h-100 tofront">
 			<div class="row justify-content-between">
 				<div class="col-md-6 pt-6 pb-6 align-self-center">
-					<h1 class="secondfont mb-3 font-weight-bold">asdf</h1>
+					<h2 class="secondfont mb-3 font-weight-bold">Where idea explosion!!!</h2>
 					<p class="mb-3">
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, harum excepturi? Tempora
 						voluptate earum, atque quia recusandae iure quos maiores? Sequi iste quam necessitatibus
@@ -19,7 +19,7 @@
 					<a href="#" class="btn btn-dark">Read More</a>
 				</div>
 				<div class="col-md-6 d-none d-md-block pr-0"><img style="background-size: cover;"
-						src="{{ first.image_url }}" alt=""> </div>
+						src="{% static 'images/blog.jpeg' %}" alt=""> </div>
 			</div>
 		</div>
 	</div>
@@ -27,13 +27,13 @@
 
 
 
-<div class="container pt-4 pb-4 " style="margin-bottom: 70px;">
+<div class="container py-4 " style="margin-bottom: 70px;">
 	<div class="row">
 		<div class="col-lg-6">
 
 			<div class="card border-0 mb-4 box-shadow h-xl-300">
-				<div style="background-image: url(./assets/img/demo/3.jpg); ">
-					<img src="#"
+				<div>
+					<img src="{% static 'images/blog2.jpg' %}"
 						style="height: 200px; background-size: cover; background-repeat: no-repeat; width: 100%;"
 						alt="">
 				</div>
@@ -42,7 +42,7 @@
 						<a class="text-dark" href="#"> {{ s_post.title}} </a>
 					</h2>
 					<p class="card-text">
-						{{s_post.detail|truncatechars:150}}
+						{{s_post.description|truncatechars:150}}
 					</p>
 					<div>
 						<small class="d-block">

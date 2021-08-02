@@ -8,7 +8,8 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author', 'category', 'featured', 'created_date']
+    list_display = ['title', 'author', 'category', 'visible','featured', 'status', 'created_date']
+    list_editable = ['featured','status', 'visible']
 
 admin.site.register(Post, PostAdmin)
 
