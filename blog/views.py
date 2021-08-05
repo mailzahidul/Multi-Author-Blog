@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Post
 from django.views import View
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
@@ -12,11 +12,13 @@ from django.core.mail import send_mail
 
 def home(request):
     feature_post = Post.objects.filter(status='active', featured=True, visible=True).order_by('category', '-created_date')[:5]
+    
     context={
-        'f_post': feature_post[0],
+        'f_post': feature_post.first(),
         's_post': feature_post[1],
         'last_post': feature_post[2:]
     }
+    
     return render(request, 'pages/home.html', context)
 
 class Registration_views(View):
@@ -107,3 +109,15 @@ def contact_us(request):
         'forms':forms
     }
     return render(request, 'pages/contact_us.html', context)
+
+
+def view_post(request, id):
+    post_obj = get_object_or_404(Post, id=id)
+    post_obj.visit_count=post_obj.visit_count+1
+    post_obj.save()
+    related_post = Post.objects.filter(category=post_obj.category, author=post_obj.author).exclude(id=id).order_by('-id')[:4]
+    context = {
+        'post_obj':post_obj,
+        'related_post':related_post
+    }
+    return render( request, 'post/view_post.html', context)

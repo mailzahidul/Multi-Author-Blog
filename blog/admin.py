@@ -20,3 +20,9 @@ class EmailSendAdmin(admin.ModelAdmin):
     list_display = ['sender_user', 'sender', 'subject', 'send_date']
 
 admin.site.register(EmailSend, EmailSendAdmin)
+
+
+class AuthorAdmin(admin.ModelAdmin):
+    list_display = ['first_name', 'author']
+
+admin.site.register(Author, AuthorAdmin)

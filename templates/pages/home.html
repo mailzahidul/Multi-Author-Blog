@@ -39,45 +39,50 @@
 				</div>
 				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
 					<h2 class="h4 font-weight-bold">
-						<a class="text-dark" href="#"> {{ s_post.title}} </a>
+						<a class="text-dark" href="#"> {{ s_post.title }}</a>
 					</h2>
 					<p class="card-text">
-						{{s_post.description|truncatechars:150}}
+						{{ s_post.description|truncatechars:150 }}
 					</p>
 					<div>
 						<small class="d-block">
-							{% if s_post.author.author_image %}
+							{% if s_post.author.author_img %}
 							<img height="20" class="rounded-circle shadow" style="border-radius: 50%;"
-								src="{{ s_post.author.author_image.url }}">
+								src="{{ s_post.author.author_img.url }}">
 							{% else %}
 							<img class="rounded-circle shadow" height="20"
 								src="https://www.pngarts.com/files/11/Avatar-PNG-Transparent-Image.png" alt="">
 							{% endif %}
 							<a class="text-muted" href="#">{{s_post.author.author.username}}</a></small>
-						<small class="text-muted">{{ s_post.created_at | timesince }} ago . {{s_post.visit_count}}
+						<small class="text-muted">{{ s_post.created_date | timesince }} ago . {{s_post.visit_count}}
 							views</small>
 					</div>
 				</div>
 			</div>
-
 		</div>
 
 		<div class="col-lg-6">
 			<div class="flex-md-row mb-4 box-shadow h-xl-300">
-				<!-- {% for p in last_post %} -->
-				<div class="mb-3 d-flex align-items-center">
-					<img height="80" src="{{ p.image_url }}">
-					<div class="pl-3">
-						<h2 class="mb-2 h6 font-weight-bold">
-							<a class="text-dark" href="#">sdff</a>
-						</h2>
-						<div class="card-text text-muted small">
-							Jake Bittle in LOVE/HATE
+				
+					{% for post in last_post %}
+					<div class="mb-3 d-flex align-items-center">
+						{% if post.image %}
+						<img height="20" width="20" src="{{ post.image.url }}">
+						{% else %}
+						<img height="20" width="20" src="{% static 'empty.jpg' %}">
+						{% endif %}
+						<div class="pl-3">
+							<h2 class="mb-2 h6 font-weight-bold">
+								<a class="text-dark" href="#">{{ post.title }}</a>
+							</h2>
+							<div class="card-text text-muted small">
+								{{ post.description }}
+							</div>
+							<small class="text-muted">Dec 12 &middot; 5 min read</small>
 						</div>
-						<small class="text-muted">Dec 12 &middot; 5 min read</small>
 					</div>
-				</div>
-				<!-- {% endfor %} -->
+					{% endfor %}
+				
 
 			</div>
 		</div>
@@ -123,14 +128,16 @@
 		<div class="col-md-4 pl-4">
 			<h5 class="font-weight-bold spanborder"><span>Popular</span></h5>
 			<ol class="list-featured">
+				{% for p in last_post %}
 				<li>
 					<span>
 						<h6 class="font-weight-bold">
-							<a href="#" class="text-dark">{{ p.title }}</a>
+							<a href="{% url 'view_post' p.id %}" class="text-dark">{{ p.title }}</a>
 						</h6>
 						<p class="text-muted"> p.category.name</p>
 					</span>
 				</li>
+				{% endfor %}
 				<!-- <li>
 					<span>
 						<h6 class="font-weight-bold">
