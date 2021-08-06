@@ -39,7 +39,7 @@
 				</div>
 				<div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
 					<h2 class="h4 font-weight-bold">
-						<a class="text-dark" href="#"> {{ s_post.title }}</a>
+						<a class="text-dark" href="{% url 'view_post' s_post.id %}"> {{ s_post.title }}</a>
 					</h2>
 					<p class="card-text">
 						{{ s_post.description|truncatechars:150 }}
@@ -73,12 +73,12 @@
 						{% endif %}
 						<div class="pl-3">
 							<h2 class="mb-2 h6 font-weight-bold">
-								<a class="text-dark" href="#">{{ post.title }}</a>
+								<a class="text-dark" href="{% url 'view_post' post.id %}">{{ post.title }}</a>
 							</h2>
 							<div class="card-text text-muted small">
 								{{ post.description }}
 							</div>
-							<small class="text-muted">Dec 12 &middot; 5 min read</small>
+							<small class="text-muted">{{ post.created_date | timesince }}. Views {{ post.visit_count }}</small>
 						</div>
 					</div>
 					{% endfor %}
@@ -97,19 +97,19 @@
 		<div class="col-md-8">
 			<h5 class="font-weight-bold spanborder"><span>All Stories</span></h5>
 
-			{% for p in post %}
+			{% for p in last_post %}
 			<div class="mb-3 d-flex justify-content-between">
 				<div class="pr-3">
 					<h2 class="mb-1 h4 font-weight-bold">
-						<a class="text-dark" href="#">{{ p.title }}</a>
+						<a class="text-dark" href="{% url 'view_post'  p.id %}">{{ p.title }}</a>
 					</h2>
 					<p>
-						{{ p.detail |truncatechars:100 }}
+						{{ p.description | truncatechars:100 }}
 					</p>
 					<div class="card-text text-muted small">
-						{% if p.author.author_image %}
+						{% if p.author.author_img %}
 						<img height="20" class="rounded-circle shadow" style="border-radius: 50%;"
-							src="{{ p.author.author_image.url }}">
+							src="{{ p.author.author_img.url }}">
 						{% else %}
 						<img class="rounded-circle shadow" height="20"
 							src="https://www.pngarts.com/files/11/Avatar-PNG-Transparent-Image.png" alt="">
@@ -117,7 +117,7 @@
 						{{ p.author.author.username }} in <a class="text-dark" href="">{{ p.catagories.name }} </a>
 
 					</div>
-					<small class="text-muted">{{p.created_at|timesince }} ago ; {{ p.visit_count}} views </small>
+					<small class="text-muted">{{p.created_date|timesince }} ago ; {{ p.visit_count}} views </small>
 				</div>
 				<img height="120" src="{{ p.image_url }}">
 			</div>
@@ -134,7 +134,7 @@
 						<h6 class="font-weight-bold">
 							<a href="{% url 'view_post' p.id %}" class="text-dark">{{ p.title }}</a>
 						</h6>
-						<p class="text-muted"> p.category.name</p>
+						<p class="text-muted"> {{p.category.name}}</p>
 					</span>
 				</li>
 				{% endfor %}

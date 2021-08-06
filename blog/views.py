@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Category, Post
+from django.http import HttpResponseRedirect
+from .models import Category, Post, EmailSubscribe, Comments
 from django.views import View
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -121,3 +122,27 @@ def view_post(request, id):
         'related_post':related_post
     }
     return render( request, 'post/view_post.html', context)
+
+
+def subscribe(request):
+    if request.method == 'POST':
+        sub_email = request.POST['subscribe']
+        obj_email = EmailSubscribe.objects.filter(email=sub_email)
+        if obj_email:
+            messages.warning(request, "This Email Already Subscribe")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        else:
+            obj = EmailSubscribe(email=sub_email)
+            obj.save()
+            messages.success(request, "Thanks for Subscribe...")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class CommentsView(View):
+    def post(self, request, id):
+        post = get_object_or_404(Post, id=id)
+        name = request.POST['name']
+        body = request.POST['body']
+        comm = Comments(post=post, name=name, body=body).save()
+        print(post, name, body)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -84,3 +84,21 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class EmailSubscribe(models.Model):
+    email = models.EmailField()
+    subscribe_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
+
+
+class Comments(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=50)
+    body = models.TextField()
+    comment_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

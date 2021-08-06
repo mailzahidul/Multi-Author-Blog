@@ -26,3 +26,15 @@ class AuthorAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'author']
 
 admin.site.register(Author, AuthorAdmin)
+
+
+class EmailSubscribeAdmin(admin.ModelAdmin):
+    list_display = ['email', 'subscribe_date']
+
+admin.site.register(EmailSubscribe, EmailSubscribeAdmin)
+
+
+class CommentsAdmin(admin.ModelAdmin):
+    list_display=['name', 'post', 'comment_date']
+
+admin.site.register(Comments, CommentsAdmin)

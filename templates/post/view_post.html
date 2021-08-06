@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} {% endblock %}
+{% block title %} {{post_obj.title}} {% endblock %}
 
 {% block content %}
 <div class="container">
@@ -44,6 +44,83 @@
         </div>
 
     </div>
+</div>
+
+<div class="container pt-4 pb-4">
+	<div class="row justify-content-center">
+		<div class="col-lg-2 pr-4 mb-4 col-md-12">
+			<div class="sticky-top text-center">
+				<div class="text-muted">
+					Share this
+				</div>
+				<div class="share d-inline-block">
+					<!-- AddToAny BEGIN -->
+					<div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+						<a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+						<a class="a2a_button_facebook"></a>
+						<a class="a2a_button_twitter"></a>
+					</div>
+					<script async src="https://static.addtoany.com/menu/page.js"></script>
+					<!-- AddToAny END -->
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 col-lg-8">
+			<div class="border p-5 bg-lightblue">
+				<div class="row justify-content-between">
+					<div class="col-md-5 mb-2 mb-md-0">
+						<h5 class="font-weight-bold secondfont">Become a member</h5>
+						 Get the latest news right in your inbox. We never spam!
+					</div>
+					<div class="col-md-7">
+                        <form action="{% url 'subscribe' %}" method="POST">
+						<div class="row">
+                            
+                                {% csrf_token %}
+							<div class="col-md-12">
+								<input type="email" name='subscribe' class="form-control" placeholder="Enter your e-mail address" required>
+							</div>
+							<div class="col-md-12 mt-2">
+								<button type="submit" class="btn btn-success btn-block">Subscribe</button>
+							</div>
+                        
+						</div>
+                    </form>
+					</div>
+				</div>
+			</div>
+
+			<form style="margin-top:50px;" action="{% url 'comment' post_obj.id %}" method="POST">
+				{% csrf_token %}
+				<div class="row form-group">
+					<div class="col">
+						<input type="text" name='name' class="form-control" placeholder="Your Name">
+					</div>
+				</div>
+				<div class="form-group">
+					<textarea class="form-control" name='body' id="exampleFormControlTextarea1" rows="4"></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary btn-round">Submit Comment </button>
+			</form>
+			<br>
+
+
+				{% for p in post_obj.comments.all %}
+				<!-- {% if forloop.counter|divisibleby:2 %} -->
+				<div style="border-radius: 10px; margin: 5px; padding: 25px; background-color: #d8d8d8; ">
+					<p><strong>{{ p.comments.name }}</strong> at {{ p.comments.comment_date }}</p>
+					<p style="padding: 20px; background-color: #f1f1f1; border-radius: 7px; border:0.5px solid #c5c5c5">{{ p.body }}</p>
+				</div>
+				<!-- {% else %}
+				<div style="border-radius: 10px; margin: 5px; padding: 25px; background-color: #b3d3c0;">
+					<p><strong>{{ p.name }}</strong> at {{ p.created_at }}</p>
+					<p style="padding: 20px; background-color: #c5e6d3; border-radius: 7px; border:0.5px solid #c5c5c5">{{ p.body }}</p>
+				</div> -->
+				<!-- {% endif %} -->
+				{% endfor %}
+                <h1>lasjlfjs</h1>
+		</div>
+	</div>
 </div>
 
 
