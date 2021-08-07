@@ -117,9 +117,13 @@ def view_post(request, id):
     post_obj.visit_count=post_obj.visit_count+1
     post_obj.save()
     related_post = Post.objects.filter(category=post_obj.category, author=post_obj.author).exclude(id=id).order_by('-id')[:4]
+    first = related_post.first()
+    rest_post = related_post[1:]
     context = {
         'post_obj':post_obj,
-        'related_post':related_post
+        'related_post':related_post,
+        'first':first,
+        'rest_post':rest_post
     }
     return render( request, 'post/view_post.html', context)
 
@@ -144,5 +148,4 @@ class CommentsView(View):
         name = request.POST['name']
         body = request.POST['body']
         comm = Comments(post=post, name=name, body=body).save()
-        print(post, name, body)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
