@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import Password_Change_Form, EmailSendForm
 from django.core.mail import send_mail
+from django.db.models import Q
 # Create your views here.
 
 
@@ -149,3 +150,21 @@ class CommentsView(View):
         body = request.POST['body']
         comm = Comments(post=post, name=name, body=body).save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def search_view(request):
+    q = request.GET.get('search_item')
+    post = Post.objects.filter(status='active', visible=True)
+    if len(q) > 100:
+        posts = post.none()
+    else:
+        posts = post.filter(
+            Q(title__icontains=q) | 
+            Q(description__icontains=q) | 
+            Q(category__name__icontains=q) | 
+            Q(author__author__username__icontains=q)
+            )
+    context = {
+        'items':posts,
+        'search':q
+    }
+    return render(request, 'pages/search.html', context)

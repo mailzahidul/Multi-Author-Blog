@@ -18,5 +18,6 @@ urlpatterns = [
     path('post/view_post/<int:id>', views.view_post, name='view_post'),
     path('subscribe', views.subscribe, name='subscribe'),
     path('comments/<int:id>', views.CommentsView.as_view(), name="comments"),
+    path('search_item', views.search_view, name="search_item"),
     path('contact_us/', views.contact_us, name='contact_us')
 ]
